@@ -1,0 +1,183 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
+import axios from 'axios';
+
+export default function SignUp() {
+  const [companyDetail, setCompanyDetail] = useState(false);
+  const [formState, setFormState] = useState({
+    name: "",
+    email: "",
+    password: "",
+    companyName: "",
+    jobRole: "",
+    expYear: "",
+    role:""
+  });
+
+  const handleChange = (event: any) => {
+    const fieldName = event.target.name;
+    const fieldValue = event.target.value;
+
+    setFormState({
+      ...formState,
+      [fieldName]: fieldValue,
+    });
+  };
+
+  async function handleSignUp(role:string) {
+    formState.role=role;
+    try {
+      const response=axios.post("/signup",{
+        email :formState.email,
+        name     :formState.name,
+        password :formState.password,
+        companyName :formState.companyName,
+        role     :formState.role,
+        jobRole :formState.jobRole,
+        expYear :formState.expYear
+      })
+      const data=await response
+       console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return (
+    <div className="w-screen h-screen flex flex-col justify-center items-center">
+      <h1 className="text-3xl font-bold text-center">Sign Up</h1>
+      <br />
+      <Tabs
+        defaultValue="placed"
+        className="sm:w-2/5 lg:w-[30%] xl:w-1/5 flex flex-col"
+      >
+        <TabsList>
+          <TabsTrigger value="placed">Placed</TabsTrigger>
+          <TabsTrigger value="seeker">Seeker</TabsTrigger>
+        </TabsList>
+        <TabsContent value="placed">
+          <form className="flex flex-col">
+            {companyDetail == false ? (
+              <>
+                {" "}
+                <label>Full Name:</label>
+                <Input
+                  value={formState.name}
+                  type="text"
+                  name="name"
+                  placeholder="Enter your fullname...."
+                  onChange={handleChange}
+                  required
+                 pattern="^(?=.*[A-Z])(?=.*[a-z])[^ ]*(?: [^ ]*){0,2}$"
+                />
+                <br />
+                <label>Email:</label>
+                <Input
+                  value={formState.email}
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email...."
+                  onChange={handleChange}
+                  required
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
+"
+                />
+                <br />
+                <label>Password:</label>
+                <Input
+                  value={formState.password}
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password...."
+                  onChange={handleChange}
+                  required
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$"
+                />
+                <br />
+              </>
+            ) : (
+              <>
+                <label>Company Name:</label>
+                <Input
+                  value={formState.companyName}
+                  type="text"
+                  name="companyName"
+                  placeholder="Enter your company name...."
+                  onChange={handleChange}
+                  required
+                   pattern="^(?=.*[A-Z])(?=.*[a-z])[^ ]*(?: [^ ]*){0,2}$"
+                />
+                <br />
+                <label>Job Role:</label>
+                <Input
+                  value={formState.jobRole}
+                  type="text"
+                  name="jobRole"
+                  placeholder="Enter your job role...."
+                  onChange={handleChange}
+                  required
+                   pattern="^(?=.*[A-Z])(?=.*[a-z])[^ ]*(?: [^ ]*){0,2}$"
+                />
+                <br />
+                <label>Experience:</label>
+                <Input
+                  value={formState.expYear}
+                  type="number"
+                  name="expYear"
+                  placeholder="Enter your years of experience...."
+                  onChange={handleChange}
+                  required
+                />
+                <br />
+              </>
+            )}
+            {companyDetail == false ? (
+              <Button
+                className="self-center"
+                onClick={() => setCompanyDetail(true)}
+                disabled={!formState.name || !formState.email || !formState.password}
+              >
+                Next
+              </Button>
+            ) : (
+              <Button className="self-center" onClick={()=>handleSignUp("placed")}>SignUp</Button>
+            )}
+            <br />
+            <p className="text-center">
+              Have an account ?{" "}
+              <span className="font-bold">
+                <Link href="/signin">SignIn</Link>
+              </span>
+            </p>
+          </form>
+        </TabsContent>
+        <TabsContent value="seeker">
+          {" "}
+          <form className="flex flex-col">
+            <label>Full Name:</label>
+            <Input type="text" placeholder="Enter your fullname...." />
+            <br />
+            <label>Email:</label>
+            <Input type="email" placeholder="Enter your email...." />
+            <br />
+            <label>Password:</label>
+            <Input type="password" placeholder="Enter your password...." />
+            <br />
+            <Button className="self-center">SignIn</Button>
+            <br />
+            <p className="text-center">
+              Have an account ?{" "}
+              <span className="font-bold">
+                <Link href="/signin">SignIn</Link>
+              </span>
+            </p>
+          </form>
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
+}
