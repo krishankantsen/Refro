@@ -30,14 +30,18 @@ export default function Signin() {
         password: formState.password,
       });
       const data=response.data
-      toast.success(data.error)
-      // if (response.data.success) {
-      //   window.location.href = "/dashboard";
-      // } else {
-      //   toast.error(response.data.error)
-      // }
+     console.log(data)
+      if (data.success) {
+        toast.success("Login Successfully")
+        window.location.href = "/dashboard";
+      } else {
+        toast.error(data.error)
+      }
     } catch (error:any) {
-      toast.error(error.error)
+
+      toast.error(error.response.data.error,{
+        duration:1000
+      })
     }
   }
   return (
