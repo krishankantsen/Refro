@@ -17,6 +17,7 @@ model User {
     role     String
     jobRole String
     expYear Int
+    profilePic String
 }
 model Name{
   id Int @id @default(autoincrement())

@@ -16,6 +16,7 @@ export default function SignUp() {
     jobRole: "",
     expYear: 0,
     role: ""
+
   });
 
   const handleChange = (event: any) => {
@@ -31,6 +32,7 @@ export default function SignUp() {
   async function handleSignUp(role: string,event:any) {
     event.preventDefault();
     formState.role = role;
+    console.log(formState.expYear)
     try {
       const response = await axios.post("/api/signup", {
         email: formState.email,
@@ -39,7 +41,8 @@ export default function SignUp() {
         companyName: formState.companyName,
         role: formState.role,
         jobRole: formState.jobRole,
-        expYear: formState.expYear
+        expYear: formState.expYear,
+        profilePic:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQABqQIdskCD9BK0I81EbVfV9tTz320XvJ35A&s"
       });
       const data = response.data;
       if(data.success){
