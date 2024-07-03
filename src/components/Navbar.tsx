@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function Navbar() {
   const { setTheme } = useTheme();
@@ -42,7 +43,7 @@ export default function Navbar() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button className="self-end rounded-lg">Login</Button>
+        <Button className="self-end rounded-lg" onClick={()=>toast.success("clicked",{duration:1000})}>Login</Button>
       </div>
     </div>
   );

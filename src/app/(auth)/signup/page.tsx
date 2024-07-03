@@ -14,8 +14,8 @@ export default function SignUp() {
     password: "",
     companyName: "",
     jobRole: "",
-    expYear: "",
-    role:""
+    expYear: 0,
+    role: ""
   });
 
   const handleChange = (event: any) => {
@@ -28,20 +28,23 @@ export default function SignUp() {
     });
   };
 
-  async function handleSignUp(role:string) {
-    formState.role=role;
+  async function handleSignUp(role: string,event:any) {
+    event.preventDefault();
+    formState.role = role;
     try {
-      const response=axios.post("/signup",{
-        email :formState.email,
-        name     :formState.name,
-        password :formState.password,
-        companyName :formState.companyName,
-        role     :formState.role,
-        jobRole :formState.jobRole,
-        expYear :formState.expYear
-      })
-      const data=await response
-       console.log(data)
+      const response = await axios.post("/api/signup", {
+        email: formState.email,
+        name: formState.name,
+        password: formState.password,
+        companyName: formState.companyName,
+        role: formState.role,
+        jobRole: formState.jobRole,
+        expYear: formState.expYear
+      });
+      const data = response.data;
+      if(data.success){
+        window.location.href="/signin"
+      }
     } catch (error) {
       console.log(error)
     }
@@ -72,7 +75,7 @@ export default function SignUp() {
                   placeholder="Enter your fullname...."
                   onChange={handleChange}
                   required
-                 pattern="^(?=.*[A-Z])(?=.*[a-z])[^ ]*(?: [^ ]*){0,2}$"
+                  pattern="^(?=.*[A-Z])(?=.*[a-z])[^ ]*(?: [^ ]*){0,2}$"
                 />
                 <br />
                 <label>Email:</label>
@@ -109,7 +112,7 @@ export default function SignUp() {
                   placeholder="Enter your company name...."
                   onChange={handleChange}
                   required
-                   pattern="^(?=.*[A-Z])(?=.*[a-z])[^ ]*(?: [^ ]*){0,2}$"
+                  pattern="^(?=.*[A-Z])(?=.*[a-z])[^ ]*(?: [^ ]*){0,2}$"
                 />
                 <br />
                 <label>Job Role:</label>
@@ -120,7 +123,7 @@ export default function SignUp() {
                   placeholder="Enter your job role...."
                   onChange={handleChange}
                   required
-                   pattern="^(?=.*[A-Z])(?=.*[a-z])[^ ]*(?: [^ ]*){0,2}$"
+                  pattern="^(?=.*[A-Z])(?=.*[a-z])[^ ]*(?: [^ ]*){0,2}$"
                 />
                 <br />
                 <label>Experience:</label>
@@ -144,7 +147,7 @@ export default function SignUp() {
                 Next
               </Button>
             ) : (
-              <Button className="self-center" onClick={()=>handleSignUp("placed")}>SignUp</Button>
+              <Button className="self-center" onClick={(e) => handleSignUp("Placed",e)}>SignUp</Button>
             )}
             <br />
             <p className="text-center">
@@ -159,15 +162,40 @@ export default function SignUp() {
           {" "}
           <form className="flex flex-col">
             <label>Full Name:</label>
-            <Input type="text" placeholder="Enter your fullname...." />
+            <Input
+              value={formState.name}
+              type="text"
+              name="name"
+              placeholder="Enter your fullname...."
+              onChange={handleChange}
+              required
+              // pattern="^(?=.*[A-Z])(?=.*[a-z])[^ ]*(?: [^ ]*){0,2}$"
+            />
             <br />
             <label>Email:</label>
-            <Input type="email" placeholder="Enter your email...." />
+            <Input
+              value={formState.email}
+              type="email"
+              name="email"
+              placeholder="Enter your email...."
+              onChange={handleChange}
+              required
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
+"
+            />
             <br />
             <label>Password:</label>
-            <Input type="password" placeholder="Enter your password...." />
+            <Input
+              value={formState.password}
+              type="password"
+              name="password"
+              placeholder="Enter your password...."
+              onChange={handleChange}
+              required
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$"
+            />
             <br />
-            <Button className="self-center">SignIn</Button>
+            <Button className="self-center" onClick={(e)=>handleSignUp("Seeker",e)}>SignUp</Button>
             <br />
             <p className="text-center">
               Have an account ?{" "}

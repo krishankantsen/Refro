@@ -5,6 +5,7 @@ import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
+import { toast } from 'sonner';
 export default function Signin() {
   const [formState, setFormState] = useState({
     email: "",
@@ -26,14 +27,17 @@ export default function Signin() {
     try {
       const response = await axios.post("/api/login", {
         email: formState.email,
-        password: formState.password, 
+        password: formState.password,
       });
-     const data=response.data
-      if(data.success){
-        window.location.href = "/dashboard";
-      }
-    } catch (error) {
-      console.log(error);
+      const data=response.data
+      toast.success(data.error)
+      // if (response.data.success) {
+      //   window.location.href = "/dashboard";
+      // } else {
+      //   toast.error(response.data.error)
+      // }
+    } catch (error:any) {
+      toast.error(error.error)
     }
   }
   return (
@@ -76,7 +80,7 @@ export default function Signin() {
           />
         )}
         <br />
-        <Button  className="self-center" onClick={
+        <Button className="self-center" onClick={
           handleSignIn}>
           SignIn
         </Button>

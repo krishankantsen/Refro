@@ -28,7 +28,7 @@ export async function POST(req: Request) {
 
   const result = User.safeParse(data);
   if (!result.success) {
-    return NextResponse.json({error:"Please check all the feilds properly"},{status:404});
+    return NextResponse.json({message:"Please check all the feilds properly",error:result.error},{status:404});
   }
   const alreadyUser=await prisma.user.findFirst({
     where: {
