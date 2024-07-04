@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import axios from 'axios';
 
 export default function SignUp() {
@@ -18,7 +19,7 @@ export default function SignUp() {
     role: ""
 
   });
-
+  const [showPass, setShowPass] = useState(false);
   const handleChange = (event: any) => {
     const fieldName = event.target.name;
     const fieldValue = event.target.value;
@@ -96,13 +97,24 @@ export default function SignUp() {
                 <label>Password:</label>
                 <Input
                   value={formState.password}
-                  type="password"
+                  type={showPass == true ? "password" : "text"}
                   name="password"
                   placeholder="Enter your password...."
                   onChange={handleChange}
                   required
                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$"
                 />
+                {showPass == true ? (
+          <Eye
+            onClick={() => setShowPass(!showPass)}
+            className="cursor-pointer self-end mt-[-30px] mr-2"
+          />
+        ) : (
+          <EyeOff
+            onClick={() => setShowPass(!showPass)}
+            className="cursor-pointer self-end mt-[-30px] mr-2"
+          />
+        )}
                 <br />
               </>
             ) : (
@@ -190,13 +202,24 @@ export default function SignUp() {
             <label>Password:</label>
             <Input
               value={formState.password}
-              type="password"
+              type={showPass == true ? "password" : "text"}
               name="password"
               placeholder="Enter your password...."
               onChange={handleChange}
               required
               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$"
             />
+            {showPass == true ? (
+          <Eye
+            onClick={() => setShowPass(!showPass)}
+            className="cursor-pointer self-end mt-[-30px] mr-2"
+          />
+        ) : (
+          <EyeOff
+            onClick={() => setShowPass(!showPass)}
+            className="cursor-pointer self-end mt-[-30px] mr-2"
+          />
+        )}
             <br />
             <Button className="self-center" onClick={(e)=>handleSignUp("Seeker",e)}>SignUp</Button>
             <br />

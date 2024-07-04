@@ -1,6 +1,6 @@
 "use client";
 import { Menu } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCookies } from "next-client-cookies";
