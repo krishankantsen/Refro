@@ -3,6 +3,7 @@ import { Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useCookies } from "next-client-cookies";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,12 +15,13 @@ import { toast } from "sonner";
 
 export default function Navbar() {
   const { setTheme } = useTheme();
+  const cookie = useCookies();
+  const token = cookie.get("token");
   return (
     <div className="navbar z-10 w-screen h-12 fixed flex justify-center align-middle p-1 pr-2 pl-2">
       <div className="logo w-1/2 h-full flex items-center gap-1">
-     
         <h1 className="text-center self-center font-bold text-xl ">
-          <Link href="/" >REFRO</Link>
+          <Link href="/">REFRO</Link>
         </h1>
       </div>
       <div className="w-1/2 h-full justify-end flex items-center gap-6">
@@ -43,7 +45,11 @@ export default function Navbar() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button className="self-end rounded-lg" onClick={()=>toast.success("clicked",{duration:1000})}>Login</Button>
+        <Button className="self-end rounded-lg">
+          <Link href={token ? "/dashboard" : "/signin"}>
+            {token ? "Dashboard" : "Login"}
+          </Link>
+        </Button>
       </div>
     </div>
   );
