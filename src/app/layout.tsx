@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/component/Navbar";
 import { ThemeProvider } from "@/components/component/theme-provider";
 import {Toaster } from "sonner"
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" >
       <body className={inter.className}>
       <ThemeProvider
             attribute="class"
@@ -26,7 +27,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
         <Navbar/>
-        {children}
+      {children}
         <Toaster  position="top-center" richColors	 />
         </ThemeProvider></body>
     </html>

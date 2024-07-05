@@ -1,14 +1,36 @@
 import CreatePost from "@/components/component/CreatePost";
+import { PortfolioCard } from "@/components/component/portfolio-card";
 import { ProfileCard } from "@/components/component/ProfileCard";
+import { WorkExp } from "@/components/component/work-exp";
+import { UserList } from "@/components/component/user-list";
+import { JobCard } from "@/components/component/job-card";
+import { getCookie } from '@/lib/cookie';
 
+import { CreateSearchPost } from "@/components/component/create-search-post";
+import { SearchPost } from "@/components/component/search-post";
 
 export default function Dashboard() {
-    return (
-        <div className="w-screen h-screen flex flex-col md:flex-row z-0 pt-12">
-            <div className="left bg-red-400 md:w-[26%] p-8" ><ProfileCard/></div>
-            <div className="center bg-blue-400 md:w-[51%] p-8"><CreatePost/></div>
-            <div className="right bg-slate-400 md:w-[23%]" >right</div>
-        </div>
-        )
-    
+  const role = getCookie("role");
+console.log(role)
+  return (
+    <main className="max-w-screen   m-0 p-0 overflow-hidden flex flex-col md:flex-row  pt-12">
+      <div className=" lg:w-[26%] md:w-[40%] p-2 lg:p-3 xl:p-16 md:p-1 gap-4 flex flex-col xl:pr-0 xl:pt-8">
+        <ProfileCard />
+        <WorkExp />
+        <PortfolioCard />{" "}
+      </div>
+      <div className="gap-4 flex flex-col  lg:w-[51%] md:w-[60%] md:p-1 lg:p-3  xl:p-16 p-2 xl:pt-8">
+        {role=="Placed"?<CreateSearchPost/>:<SearchPost/>}
+        <JobCard/>
+        <JobCard/>
+        <JobCard/>
+        <JobCard/>
+        <JobCard/>
+        <JobCard/>
+      </div>
+      <div className=" lg:w-[23%] lg:p-3 xl:p-16 md:hidden lg:block p-2  xl:pl-0 xl:pt-8">
+        <UserList />
+      </div>
+    </main>
+  );
 }

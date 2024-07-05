@@ -38,6 +38,7 @@ export async function POST(req: Request) {
       const token = jwt.sign({ email: user.email }, process.env.SECRET || "");
       if (token) {
         cookie.set("token", token);
+        cookie.set("role", user.role);
       }
     } else {
       return NextResponse.json(

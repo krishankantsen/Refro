@@ -22,8 +22,20 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 export function WorkExp() {
   return (
-    <Card className="w-full max-w-md">
-      <ScrollArea className="p-6 grid gap-6">
+    <Card className="w-full ">
+      <ScrollArea className="p-6 flex gap-12">
+        <div className="flex items-center gap-4">
+          <div className="bg-primary rounded-md p-3 flex items-center justify-center">
+            <BriefcaseIcon className="w-6 h-6 text-primary-foreground" />
+          </div>
+          <div className="grid gap-1 flex-1">
+            <div className="flex justify-between">
+              <h1 className=" font-semibold">Software Engineer</h1>
+              <div className="text-muted-foreground">3 years</div>
+            </div>
+            <div className="text-muted-foreground">Acme Inc.</div>
+          </div>
+        </div>
         <div className="flex items-center gap-4">
           <div className="bg-primary rounded-md p-3 flex items-center justify-center">
             <BriefcaseIcon className="w-6 h-6 text-primary-foreground" />
@@ -41,7 +53,7 @@ export function WorkExp() {
   )
 }
 
-function BriefcaseIcon(props) {
+function BriefcaseIcon(props:any) {
   return (
     <svg
       {...props}

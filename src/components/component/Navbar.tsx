@@ -1,9 +1,7 @@
 "use client";
-import { Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useCookies } from "next-client-cookies";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,18 +9,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { toast } from "sonner";
+
+import { getCookie } from "@/lib/cookie";
 
 export default function Navbar() {
+  
   const { setTheme } = useTheme();
-  const cookie = useCookies();
-  const token = cookie.get("token");
+  const token = getCookie("token");
+  const style={
+    "width": "-webkit-fill-available",
+  }
+  const logo="</R>"
   return (
-    <div className="navbar z-10 w-screen h-12 fixed flex justify-center align-middle p-1 pr-2 pl-2">
+    <main className="navbar h-12 absolute flex justify-between align-middle pl-866 pr-6 " style={style}>
       <div className="logo w-1/2 h-full flex items-center gap-1">
         <h1 className="text-center self-center font-bold text-xl ">
-          <Link href="/">REFRO</Link>
+          <Link href="/">{logo} REFRO</Link>
         </h1>
+        {/* <Input type="text" className="w-96 bg-card"/> */}
       </div>
       <div className="w-1/2 h-full justify-end flex items-center gap-6">
         <DropdownMenu>
@@ -45,12 +49,12 @@ export default function Navbar() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button className="self-end rounded-lg">
+        <Button className="self-middle rounded-lg  ">
           <Link href={token ? "/dashboard" : "/signin"}>
             {token ? "Dashboard" : "Login"}
           </Link>
         </Button>
       </div>
-    </div>
+    </main>
   );
 }
