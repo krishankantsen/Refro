@@ -6,12 +6,16 @@ import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from 'sonner';
+import { useAppDispatch } from "@/lib/store/hooks";
+import { setTokenState, setUserState } from "@/lib/store/authSlice";
+import { useRouter } from "next/navigation";
 export default function Signin() {
   const [formState, setFormState] = useState({
     email: "",
     password: "",
   });
-
+  const dispatch=useAppDispatch();
+  const router = useRouter()
   const [showPass, setShowPass] = useState(false);
   const handleChange = (event: any) => {
     const fieldName = event.target.name;
@@ -30,10 +34,11 @@ export default function Signin() {
         password: formState.password,
       });
       const data=response.data
-     console.log(data)
       if (data.success) {
         toast.success("Login Successfully")
-        window.location.href = "/dashboard";
+        dispatch(setTokenState(data.token))
+        dispatch(setUserState(data.user))
+       router.push("/dashboard")
       } else {
         toast.error(data.error)
       }

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "../ui/button";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Router, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
   DropdownMenu,
@@ -9,19 +9,24 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+import { setTokenState,  setUserState } from "@/lib/store/authSlice";
 
-import { getCookie } from "@/lib/cookie";
+
 
 export default function Navbar() {
-  
   const { setTheme } = useTheme();
-  const token = getCookie("token");
-  const style={
-    "width": "-webkit-fill-available",
-  }
-  const logo="</R>"
+  const dispatch=useAppDispatch();
+  const token = useAppSelector((state) => state.auth.token);
+  const style = {
+    width: "-webkit-fill-available",
+  };
+  const logo = "</R>";
   return (
-    <main className="navbar h-12 absolute flex justify-between align-middle pl-866 pr-6 " style={style}>
+    <main
+      className="navbar h-12 absolute flex justify-between align-middle pl-866 pr-6 "
+      style={style}
+    >
       <div className="logo w-1/2 h-full flex items-center gap-1">
         <h1 className="text-center self-center font-bold text-xl ">
           <Link href="/">{logo} REFRO</Link>
@@ -49,11 +54,24 @@ export default function Navbar() {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button className="self-middle rounded-lg  ">
-          <Link href={token ? "/dashboard" : "/signin"}>
-            {token ? "Dashboard" : "Login"}
-          </Link>
-        </Button>
+        
+        {token ?<><Link href={"/dashboard"}><Button>Dashboard</Button></Link>
+        <Button onClick={()=>{
+         dispatch(setTokenState(""));
+         dispatch(setUserState({
+           id: 0,
+           email: "",
+           name: null,
+           password: "",
+           companyName: "",
+           role: "",
+           jobRole: "",
+           expYear: 0,
+           profilePic: ""
+         }))
+          window.location.href = "/";
+        }}>Logout</Button></>:<Link href={"/signin"}><Button>Login</Button></Link>}
+        
       </div>
     </main>
   );

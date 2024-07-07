@@ -3,7 +3,6 @@ import type { NextRequest } from 'next/server'
  
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value
- console.log(token)
  return
   // if (currentUser && !request.nextUrl.pathname.startsWith('/dashboard')) {
   //   return Response.redirect(new URL('/dashboard', request.url))

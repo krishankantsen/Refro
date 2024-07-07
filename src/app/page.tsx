@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
+import ReduxProvider from "@/store/redux-provider";
 import Link from "next/link";
 
 export default function Home() {
   return (
+
     <main className="  flex justify-center items-center h-screen">
       <div className="w-3/5 h-3/5 flex flex-col justify-center items-center gap-4">
         <h1 className=" text-3xl font-bold  text-center sm:text-5xl ">
@@ -18,5 +20,6 @@ export default function Home() {
         </Link>
       </div>
     </main>
+
   );
 }

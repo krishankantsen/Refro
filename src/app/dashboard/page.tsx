@@ -1,10 +1,9 @@
-import CreatePost from "@/components/component/CreatePost";
 import { PortfolioCard } from "@/components/component/portfolio-card";
 import { ProfileCard } from "@/components/component/ProfileCard";
 import { WorkExp } from "@/components/component/work-exp";
 import { UserList } from "@/components/component/user-list";
 import { JobCard } from "@/components/component/job-card";
-import { getCookie } from '@/lib/cookie';
+import { getCookie } from 'cookies-next';
 
 import { CreateSearchPost } from "@/components/component/create-search-post";
 import { SearchPost } from "@/components/component/search-post";
@@ -21,6 +20,7 @@ console.log(role)
       </div>
       <div className="gap-4 flex flex-col  lg:w-[51%] md:w-[60%] md:p-1 lg:p-3  xl:p-16 p-2 xl:pt-8">
         {role=="Placed"?<CreateSearchPost/>:<SearchPost/>}
+        {role}
         <JobCard/>
         <JobCard/>
         <JobCard/>

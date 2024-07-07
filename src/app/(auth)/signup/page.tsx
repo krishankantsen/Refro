@@ -33,7 +33,7 @@ export default function SignUp() {
   async function handleSignUp(role: string,event:any) {
     event.preventDefault();
     formState.role = role;
-    console.log(formState.expYear)
+
     try {
       const response = await axios.post("/api/signup", {
         email: formState.email,

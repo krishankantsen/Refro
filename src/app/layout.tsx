@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/component/Navbar";
 import { ThemeProvider } from "@/components/component/theme-provider";
 import {Toaster } from "sonner"
+import StoreProvider from "./StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,8 +27,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-        <Navbar/>
-      {children}
+       <StoreProvider>
+       <Navbar/>
+       {children}
+       </StoreProvider>
         <Toaster  position="top-center" richColors	 />
         </ThemeProvider></body>
     </html>

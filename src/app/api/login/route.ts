@@ -20,7 +20,6 @@ const User = z.object({
 export async function POST(req: Request) {
   const cookie = cookies();
   const data = await req.json();
-  console.log("data", data);
 
   const result = User.safeParse(data);
   if (!result.success) {
@@ -39,6 +38,7 @@ export async function POST(req: Request) {
       if (token) {
         cookie.set("token", token);
         cookie.set("role", user.role);
+        return NextResponse.json({ success: true, token: token, user: user });
       }
     } else {
       return NextResponse.json(
@@ -49,5 +49,4 @@ export async function POST(req: Request) {
   } else {
     return NextResponse.json({ error: "User Not Found" }, { status: 500 });
   }
-  return NextResponse.json({ success: true });
 }
