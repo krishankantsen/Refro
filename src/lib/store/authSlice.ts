@@ -1,38 +1,30 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
- interface User{
-    id      :number ,
-    email    :string  ,
-    name     :string|null,
-    password :string,
-    companyName: string,
-    role     :string,
-    jobRole :string,
-    expYear :number,
-    profilePic :string,
- }
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+
+type User ={
+  id: number;
+  email: string;
+  name: string ;
+  password: string;
+  companyName: string;
+  role: string;
+  jobRole: string;
+  expYear: number;
+  profilePic: string;
+}|null
+
 export interface IAuthState {
-  token: string;
-  user:User
+  token: string|null;
+  user: User;
 }
 
 const initialState: IAuthState = {
-  token: "",
-  user:{
-    id      :0,
-    email    :""  ,
-    name     :"",
-    password :"",
-    companyName: "",
-    role     :"",
-    jobRole :"",
-    expYear :0,
-    profilePic :"",
-  },
+  token: '',
+  user:null
 };
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     setTokenState: (state, action: PayloadAction<string>) => {
@@ -41,8 +33,12 @@ export const authSlice = createSlice({
     setUserState: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
+    setLogout:(state)=>{
+      state.user =null
+      state.token = null;
+    }
   },
 });
 
-export const { setTokenState,setUserState } = authSlice.actions;
+export const { setTokenState, setUserState ,setLogout} = authSlice.actions;
 export const authReducer = authSlice.reducer;

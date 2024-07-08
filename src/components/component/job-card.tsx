@@ -20,8 +20,9 @@ To read more about using these font, please visit the Next.js documentation:
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Job } from "@/app/dashboard/page"
 
-export function JobCard() {
+export function JobCard(props:Job) {
   return (
     <Card className="w-full  p-6 grid gap-6">
       <div className="flex items-center gap-4">

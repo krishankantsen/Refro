@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button"
 
 export function SearchPost() {
   return (
-    <Card className="w-full max-w-md">
+    <Card className="w-full">
       <CardHeader>
         <CardTitle>Search</CardTitle>
         <CardDescription>Find what you're looking for with our powerful search.</CardDescription>
@@ -41,7 +41,7 @@ export function SearchPost() {
   )
 }
 
-function SearchIcon(props) {
+function SearchIcon(props:any) {
   return (
     <svg
       {...props}

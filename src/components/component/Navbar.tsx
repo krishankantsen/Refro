@@ -10,7 +10,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import { setTokenState,  setUserState } from "@/lib/store/authSlice";
+import { setTokenState,  setUserState,setLogout } from "@/lib/store/authSlice";
+
+import { useRouter } from "next/navigation";
 
 
 
@@ -18,6 +20,7 @@ export default function Navbar() {
   const { setTheme } = useTheme();
   const dispatch=useAppDispatch();
   const token = useAppSelector((state) => state.auth.token);
+  const router=useRouter()
   const style = {
     width: "-webkit-fill-available",
   };
@@ -31,7 +34,6 @@ export default function Navbar() {
         <h1 className="text-center self-center font-bold text-xl ">
           <Link href="/">{logo} REFRO</Link>
         </h1>
-        {/* <Input type="text" className="w-96 bg-card"/> */}
       </div>
       <div className="w-1/2 h-full justify-end flex items-center gap-6">
         <DropdownMenu>
@@ -39,7 +41,7 @@ export default function Navbar() {
             <Button variant="outline" size="icon">
               <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-              <span className="sr-only">Toggle theme</span>
+              <p className="sr-only">Toggle theme</p>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -57,19 +59,8 @@ export default function Navbar() {
         
         {token ?<><Link href={"/dashboard"}><Button>Dashboard</Button></Link>
         <Button onClick={()=>{
-         dispatch(setTokenState(""));
-         dispatch(setUserState({
-           id: 0,
-           email: "",
-           name: null,
-           password: "",
-           companyName: "",
-           role: "",
-           jobRole: "",
-           expYear: 0,
-           profilePic: ""
-         }))
-          window.location.href = "/";
+         dispatch(setLogout())
+         router.push("/signin")
         }}>Logout</Button></>:<Link href={"/signin"}><Button>Login</Button></Link>}
         
       </div>
