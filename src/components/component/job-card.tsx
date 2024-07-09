@@ -27,25 +27,22 @@ export function JobCard(props:Job) {
     <Card className="w-full  p-6 grid gap-6">
       <div className="flex items-center gap-4">
         <div className="bg-muted rounded-md flex items-center justify-center aspect-square w-12">
-          <img src="/placeholder.svg" width={40} height={40} alt="Company Logo" className="object-contain" />
+          <img src={props.companyLogo} width={40} height={40} alt="Company Logo" className="object-contain" />
         </div>
         <div className="flex-1">
-          <h3 className="text-lg font-semibold">Senior Frontend Engineer</h3>
-          <p className="text-muted-foreground">Acme Inc.</p>
+          <h3 className="text-lg font-semibold">{props.jobRole}</h3>
+          <p className="text-muted-foreground">{props.companyName}</p>
         </div>
       </div>
       <div className="text-muted-foreground">
-        We are looking for a Senior Frontend Engineer to join our team. You will be responsible for building and
-        maintaining our web application, which is built using React, TypeScript, Next.js, and Tailwind CSS. You should
+       {props.description}
               </div>
       <div className="flex flex-wrap gap-2 justify-start">
-        <Badge variant="outline">React</Badge>
-        <Badge variant="outline">TypeScript</Badge>
-        <Badge variant="outline">Next.js</Badge>
-        <Badge variant="outline">Tailwind CSS</Badge>
+       {props.skills.map((skill,index)=><Badge key={index} variant="outline">{skill}</Badge>)} 
+       
       </div>
       <div className="flex justify-between items-end">
-        <div className="text-muted-foreground">Salary: 8lpa</div>
+        <div className="text-muted-foreground">Salary:{props.salary}</div>
         <Button>Apply</Button>
       </div>
     </Card>

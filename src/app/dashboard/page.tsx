@@ -103,14 +103,14 @@ export default function Dashboard() {
 
   return (
     <main className="max-w-screen   m-0 p-0 overflow-hidden flex flex-col md:flex-row  pt-12">
-      <div className=" lg:w-[26%] md:w-[40%] p-2 lg:p-3 xl:p-16 md:p-1 gap-4 flex flex-col xl:pr-0 xl:pt-8">
+      <div className=" max-h-fit  lg:w-[26%] md:w-[40%] p-2 lg:p-3 xl:p-16 md:p-1 gap-4 flex flex-col xl:pr-0 xl:pt-8 ">
         <ProfileCard />
         <WorkExp />
         <PortfolioCard />{" "}
       </div>
       <div className="gap-4 flex flex-col  lg:w-[51%] md:w-[60%] md:p-1 lg:p-3  xl:p-16 p-2 xl:pt-8">
         <CenterTop/>
-        {data.map((job,index)=><JobCard  job={job as Job} />)}
+        {data.map((job,index)=><JobCard key={index} jobRole={job.jobRole} companyName={job.companyName} companyLogo={job.companyLogo} skills={job.skills} salary={job.salary} description={job.description} />)}
         
         
       </div>
