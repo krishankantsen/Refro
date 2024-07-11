@@ -20,6 +20,7 @@ To read more about using these font, please visit the Next.js documentation:
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import Image from "next/image"
 
 export function PortfolioCard() {
   return (
@@ -33,7 +34,7 @@ export function PortfolioCard() {
       </div>
       <Link href="#" className="group block" prefetch={false}>
         <div className="p-4">
-          <img
+          <Image
             src="/placeholder.svg"
             alt="Card Image"
             width={400}

@@ -21,13 +21,14 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Job } from "@/app/dashboard/page"
+import Image from "next/image"
 
 export function JobCard(props:Job) {
   return (
     <Card className="w-full  p-6 grid gap-6">
       <div className="flex items-center gap-4">
         <div className="bg-muted rounded-md flex items-center justify-center aspect-square w-12">
-          <img src={props.companyLogo} width={40} height={40} alt="Company Logo" className="object-contain" />
+          <Image src={props.companyLogo} width={40} height={40} alt="Company Logo" className="object-contain" />
         </div>
         <div className="flex-1">
           <h3 className="text-lg font-semibold">{props.jobRole}</h3>

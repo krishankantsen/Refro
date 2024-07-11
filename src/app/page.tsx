@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import ReduxProvider from "@/store/redux-provider";
 import Link from "next/link";
 
 export default function Home() {

@@ -26,7 +26,7 @@ export function SearchPost() {
     <Card className="w-full">
       <CardHeader>
         <CardTitle>Search</CardTitle>
-        <CardDescription>Find what you're looking for with our powerful search.</CardDescription>
+        <CardDescription>Find what you are looking for with our powerful search.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center space-x-2">
