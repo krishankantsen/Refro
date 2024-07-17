@@ -7,7 +7,7 @@ import { SearchPost } from './search-post';
 function CenterTop() {
     const user = useAppSelector((state) => state.auth.user);
   return (
-    user?.role=="Placed"?<CreateSearchPost/>:<SearchPost/>
+    user?.role=="Placed"?<><CreateSearchPost/><SearchPost/></>:<SearchPost/>
   )
 }
 

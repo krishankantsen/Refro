@@ -17,9 +17,8 @@ const User = z.object({
       }
     ),
 });
-export async function POST(req: Request) {
+export async function Signin(data:any) {
   const cookie = cookies();
-  const data = await req.json();
 
   const result = User.safeParse(data);
   if (!result.success) {
@@ -38,7 +37,7 @@ export async function POST(req: Request) {
       if (token) {
         cookie.set("token", token);
         cookie.set("role", user.role);
-        return NextResponse.json({ success: true, token: token, user: user });
+        return { success: true, token: token, user: user };
       }
     } else {
       return NextResponse.json(

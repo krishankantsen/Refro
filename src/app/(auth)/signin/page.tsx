@@ -4,18 +4,37 @@ import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import axios from "axios";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 import { useAppDispatch } from "@/lib/store/hooks";
 import { setTokenState, setUserState } from "@/lib/store/authSlice";
 import { useRouter } from "next/navigation";
+import gql from "graphql-tag";
+import client from "@/lib/apolloClient";
+const Signin_Query = gql`
+    query Query($input: SigninUser) {
+      Signin(input: $input) {
+        success
+        token
+        user {
+          id
+          email
+          name
+          companyName
+          role
+          jobRole
+          expYear
+          profilePic
+        }
+      }
+    }
+  `;
 export default function Signin() {
   const [formState, setFormState] = useState({
     email: "",
     password: "",
   });
-  const dispatch=useAppDispatch();
-  const router = useRouter()
+  const dispatch = useAppDispatch();
+  const router = useRouter();
   const [showPass, setShowPass] = useState(false);
   const handleChange = (event: any) => {
     const fieldName = event.target.name;
@@ -28,26 +47,20 @@ export default function Signin() {
   };
   async function handleSignIn(event: any) {
     event.preventDefault();
-    try {
-      const response = await axios.post("/api/login", {
-        email: formState.email,
-        password: formState.password,
-      });
-      const data=response.data
-      if (data.success) {
-        toast.success("Login Successfully")
-        dispatch(setTokenState(data.token))
-        dispatch(setUserState(data.user))
+    const { data } = await client.query({
+      query: Signin_Query,
+      variables: {
+        input: formState,
+      },
+    });
+    console.log(data.Signin)
+      if (data.Signin.success) {
+        dispatch(setTokenState(data.Signin.token))
+        dispatch(setUserState(data.Signin.user))
        router.push("/dashboard")
       } else {
         toast.error(data.error)
       }
-    } catch (error:any) {
-
-      toast.error(error.response.data.error,{
-        duration:1000
-      })
-    }
   }
   return (
     <div className="w-screen h-screen flex justify-center items-center">
@@ -89,8 +102,7 @@ export default function Signin() {
           />
         )}
         <br />
-        <Button className="self-center" onClick={
-          handleSignIn}>
+        <Button className="self-center" onClick={handleSignIn}>
           SignIn
         </Button>
         <br />

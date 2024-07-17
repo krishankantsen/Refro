@@ -24,16 +24,12 @@ import { Button } from "@/components/ui/button"
 export function SearchPost() {
   return (
     <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Search</CardTitle>
-        <CardDescription>Find what you are looking for with our powerful search.</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="flex items-center space-x-2">
+    
+      <CardContent className="">
+        <div className="flex items-center space-x-2 mt-5 align-middle">
           <Input type="search" placeholder="Search..." className="flex-1" />
           <Button className="shrink-0">
             <SearchIcon className="w-5 h-5" />
-            <span className="sr-only">Search</span>
           </Button>
         </div>
       </CardContent>
