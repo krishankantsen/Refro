@@ -1,3 +1,4 @@
+import { CreatePortFolio } from "../functions/functions";
 import { Signin } from "../login/route";
 import { SignUp } from "../signup/route";
 
@@ -14,5 +15,8 @@ export const resolvers = {
     SignUp: (_: any, args: any) => {
       return SignUp(args.input);
     },
+    Portfolio:(_:any,args:any)=>{
+      return CreatePortFolio(args.input)
+    }
   },
 };

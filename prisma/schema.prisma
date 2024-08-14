@@ -19,7 +19,21 @@ model User {
     expYear Int
     profilePic String
 }
-model Name{
+model Portfolio{
   id Int @id @default(autoincrement())
-  full String
+  userId Int
+  link String
+  porPic String
+}
+
+model Jobpost{
+  id Int @id @default(autoincrement())
+  userId Int
+  companyName String
+  jobTitle String
+  jobDescription String
+  jobSalary String
+  skills String[]
+  link String
+
 }

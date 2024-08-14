@@ -1,26 +1,10 @@
-'use client'
+
 import { Button } from "@/components/ui/button";
-import client from "@/lib/apolloClient";
-import { gql, useQuery } from '@apollo/client';
 import Link from "next/link";
 
+
 export default function Home() {
-  const HELLO_QUERY = gql`
-  query Hello {
-    hello {
-      name
-    }
-  }
-`;
 
-  const { data, loading, error } = useQuery(HELLO_QUERY,{
-    client
-  });
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  console.log(data);
 
   return (
     <main className="flex justify-center items-center h-screen">
