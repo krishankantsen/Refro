@@ -20,7 +20,7 @@ export const typeDefs = gql`
     companyName: String
     role: String
     jobRole: String
-    expYear: Int
+    expYear: String
     profilePic: String
   }
   type SigninResponse {
@@ -39,13 +39,19 @@ export const typeDefs = gql`
     email: String!
     password: String!
   }
+  input PortfolioInput{
+    id: Int
+    link:String
+    porPic:String
+  }
   type Query {
     Signin(input: SigninUser): SigninResponse,
     hello:Hello,
     
   }
   type Mutation{
-    SignUp(input:CreateUser):SignUpResponse
+    SignUp(input:CreateUser):SignUpResponse,
+    Portfolio(input:PortfolioInput):SignUpResponse
   }
 
 

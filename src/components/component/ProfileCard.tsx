@@ -29,7 +29,7 @@ export function ProfileCard() {
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader className="flex flex-col items-center gap-4 py-8">
         <Avatar className="h-24 w-24 border">
-          <AvatarImage src={user?.profilePic} alt="Profile picture" />
+          <AvatarImage src={user?.profilePic} alt="Profile picture" width={"auto"} height={"auto"}/>
           <AvatarFallback>JD</AvatarFallback>
         </Avatar>
         <div className="grid gap-1 text-center">
