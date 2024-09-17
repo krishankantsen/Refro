@@ -1,10 +1,7 @@
 import { Card } from "@/components/ui/card";
-import Link from "next/link";
 import CreatePost from "./CreatePost";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { X } from "lucide-react";
-import { SearchPost } from "./search-post";
 
 export function CreateSearchPost() {
   const [showCreatePost, setShowCreatePost] = useState(false);

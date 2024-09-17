@@ -17,7 +17,7 @@ const User = z.object({
       }
     ),
 });
-export async function Signin(data:any) {
+export async function Signin(data: any) {
   const cookie = cookies();
 
   const result = User.safeParse(data);
@@ -33,17 +33,21 @@ export async function Signin(data:any) {
   if (user != null) {
     const isMatch = await bcrypt.compare(data.password, user.password);
     if (isMatch) {
+      const portfolio = await prisma.portfolio.findFirst({
+        where: {
+          userId: user.id
+        }
+      })
       const token = jwt.sign({ email: user.email }, process.env.SECRET || "");
       if (token) {
         cookie.set("token", token);
         cookie.set("role", user.role);
-        return { success: true, token: token, user: user };
+        return { success: true, token: token, user: user, portfolio: portfolio };
       }
     } else {
-      return NextResponse.json(
-        { error: "Password Not matched" },
-        { status: 500 }
-      );
+      return 
+        { error: "Password Not matched" }
+     
     }
   } else {
     return NextResponse.json({ error: "User Not Found" }, { status: 500 });

@@ -22,8 +22,11 @@ import { Card, CardHeader, CardFooter } from "@/components/ui/card"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { useAppSelector } from "@/lib/store/hooks"
+import { useState } from "react"
+import ProfilePage from "./ProfilePage"
 
 export function ProfileCard() {
+const [isProfile,setIsProfile]=useState(false);
   const user=useAppSelector((state)=>state.auth.user)
   return (
     <Card className="w-full max-w-2xl mx-auto">
@@ -38,8 +41,9 @@ export function ProfileCard() {
         </div>
       </CardHeader>
       <CardFooter className="flex justify-center p-4 ">
-        <Button >Edit Profile</Button>
+        <Button onClick={()=>setIsProfile(!isProfile)} >View Profile</Button>
       </CardFooter>
+      {isProfile?<ProfilePage isProfile={isProfile} setIsProfile={setIsProfile} />:""}
     </Card>
   )
 }

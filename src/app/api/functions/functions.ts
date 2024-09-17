@@ -1,42 +1,117 @@
 import prisma from "@/lib/prisma";
 
 export async function CreatePortFolio(data: any) {
-  const Portfolio = await prisma.portfolio.create({
-    data: {
-      userId: data.id,
-      link: data.link,
-      porPic: data.porPic,
-    },
-  });
-  if (Portfolio) {
+  const CheckPortFolioExists = await prisma.portfolio.findFirst({
+    where:{
+      userId:parseInt(data.userId)
+    }
+  })
+
+  if(CheckPortFolioExists){
+    const Portfolio = await prisma.portfolio.update({
+      where:{
+       id:parseInt(data.userId)
+      }, data: {
+         userId:  parseInt(data.userId),
+         link: data.link,
+         porPic:data.porPic
+       },
+     });
+     if (Portfolio) {
+      return {
+        success: true,
+        error: "",
+      };
+    }
+  }else{
+    const CreatePortFolios = await prisma.portfolio.create({
+      data: {
+       userId:  parseInt(data.userId),
+       link: data.link,
+       porPic:data.porPic
+     },});
+
+     if (CreatePortFolios) {
+      return {
+        success: true,
+        error: "",
+      };
+    }
+  }
+   
+ 
+  
+  
+}
+
+export async function CreateJobPost(data: any) {
+
+ 
+  const JobPost = await prisma.jobpost.create(
+    {
+data: {
+  userId: parseInt(data.userId),
+  jobTitle: data.jobTitle,
+  jobDescription: data.jobDescription,
+  jobSalary: data.jobSalary,
+  skills: data.skills,
+  link: data.link,
+  companyName: data.companyName,
+  companyLogo: data.companyLogo,
+},
+    }
+  );
+
+  if (JobPost) {
     return {
       success: true,
       error: "",
     };
+  } else {
+    return {
+      success: false,
+      error: "Something went wrong",
+    };
   }
 }
+export const GetAllPosts = async()=>{
+  const posts = await prisma.jobpost.findMany({
+    
+    select: {
+      id: true,
+      userId: true,
+      jobTitle: true,
+      jobDescription: true,
+      jobSalary: true,
+      skills: true,
+      link: true,
+      companyName: true,
+      companyLogo: true,
+    },}
+  )
 
-// export async function CreateJobPost(data: any) {
-//   const JobPost = await prisma.jobpost.create({
-//     data: {
-//       userId: data.id,
-//       jobTitle: data.jobTitle,
-//       jobDescription: data.jobDescription,
-//       jobSalary: data.jobSalary,
-//       skills: data.skills,
-//       link: data.link,
-//     },
-//   });
+      return posts;
+}
+export const GetAllPlacedUser = async (userId: number) => {
+  try {
+    const placedUsers = await prisma.user.findMany({
+      where: {
+        role: 'Placed',
+        id: {
+          not: userId,
+        },
+      },
+      select: {
+        name: true,
+        jobRole: true,
+        profilePic: true,
+      },
+    });
 
-//   if (JobPost) {
-//     return {
-//       success: true,
-//       error: "",
-//     };
-//   } else {
-//     return {
-//       success: false,
-//       error: "Something went wrong",
-//     };
-//   }
-// }
+   
+    return placedUsers;
+  } catch (error) {
+    console.error('Error fetching placed users:', error);
+    // return [];
+  }
+};
