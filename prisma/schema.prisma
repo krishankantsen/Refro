@@ -30,6 +30,7 @@ model Jobpost{
   id Int @id @default(autoincrement())
   userId Int
   companyName String
+  companyLogo String
   jobTitle String
   jobDescription String
   jobSalary String

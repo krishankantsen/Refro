@@ -1,6 +1,7 @@
-import { CreatePortFolio } from "../functions/functions";
-import { Signin } from "../login/route";
-import { SignUp } from "../signup/route";
+
+import { CreateJobPost, CreatePortFolio,GetAllPlacedUser,GetAllPosts } from "../functions/functions";
+import { Signin } from "../functions/signin";
+import { SignUp } from "../functions/signup";
 
 export const resolvers = {
   Query: {
@@ -10,6 +11,13 @@ export const resolvers = {
     hello: () => {
       return { name: "hello" };
     },
+    GetAllPosts:()=>{
+      return GetAllPosts()
+    },
+    GetPlacedUsers:(_:any,args:any)=>{
+      return GetAllPlacedUser(args.input)
+    }
+
   },
   Mutation: {
     SignUp: (_: any, args: any) => {
@@ -17,6 +25,13 @@ export const resolvers = {
     },
     Portfolio:(_:any,args:any)=>{
       return CreatePortFolio(args.input)
-    }
+    },
+    CreatePost:(_:any,args:any) => {
+      return CreateJobPost(args.input);
+    },
+    
+
   },
 };
+
+

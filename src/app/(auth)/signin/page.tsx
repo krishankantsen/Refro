@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useAppDispatch } from "@/lib/store/hooks";
-import { setTokenState, setUserState } from "@/lib/store/authSlice";
+import { setTokenState, setUserState,setPortfolioState } from "@/lib/store/authSlice";
 import { useRouter } from "next/navigation";
 import gql from "graphql-tag";
 import client from "@/lib/apolloClient";
@@ -25,6 +25,12 @@ const Signin_Query = gql`
           expYear
           profilePic
         }
+        portfolio {
+          id
+          userId
+          link
+          porPic
+    }
       }
     }
   `;
@@ -57,6 +63,7 @@ export default function Signin() {
       if (data.Signin.success) {
         dispatch(setTokenState(data.Signin.token))
         dispatch(setUserState(data.Signin.user))
+        dispatch(setPortfolioState(data.Signin.portfolio))
        router.push("/dashboard")
       } else {
         toast.error(data.error)

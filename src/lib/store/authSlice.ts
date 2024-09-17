@@ -11,15 +11,21 @@ type User ={
   expYear: number;
   profilePic: string;
 }|null
-
+type Portfolio ={
+  userId: number;
+  link: string;
+  porPic: string ;
+}|null
 export interface IAuthState {
   token: string|null;
   user: User;
+  portfolio: Portfolio;
 }
 
 const initialState: IAuthState = {
   token: '',
-  user:null
+  user:null,
+  portfolio:null
 };
 
 export const authSlice = createSlice({
@@ -35,9 +41,12 @@ export const authSlice = createSlice({
     setLogout:(state)=>{
       state.user =null
       state.token = null;
+    },
+    setPortfolioState:(state,action:PayloadAction<Portfolio>)=>{
+      state.portfolio=action.payload
     }
   },
 });
 
-export const { setTokenState, setUserState ,setLogout} = authSlice.actions;
+export const { setTokenState, setUserState ,setLogout,setPortfolioState} = authSlice.actions;
 export const authReducer = authSlice.reducer;

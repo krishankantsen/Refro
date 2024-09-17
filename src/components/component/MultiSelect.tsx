@@ -476,17 +476,21 @@ const MultipleSelector = React.forwardRef<MultipleSelectorRef, MultipleSelectorP
         <div className="relative">
           {open && (
             <CommandList
-              className="absolute top-1 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in"
-              onMouseLeave={() => {
-                mouseOn.current = false;
-              }}
-              onMouseEnter={() => {
-                mouseOn.current = true;
-              }}
-              onMouseUp={() => {
-                inputRef.current?.focus();
-              }}
-            >
+            className="absolute top-1 z-10 w-full rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in"
+            onMouseLeave={() => {
+              mouseOn.current = false;
+            }}
+            onMouseEnter={() => {
+              mouseOn.current = true;
+            }}
+            onMouseUp={() => {
+              inputRef.current?.focus();
+            }}
+            onMouseDown={(e) => {
+              // Add this line to blur the input field when clicking outside the dropdown list
+              inputRef.current?.blur();
+            }}
+          >
               {isLoading ? (
                 <>{loadingIndicator}</>
               ) : (

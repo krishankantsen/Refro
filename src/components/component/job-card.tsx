@@ -20,31 +20,33 @@ To read more about using these font, please visit the Next.js documentation:
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Job } from "@/app/dashboard/page"
 import Image from "next/image"
+import { Job } from "./Jobs"
+import { redirect } from "next/dist/server/api-utils"
+import Link from "next/link"
 
 export function JobCard(props:Job) {
   return (
     <Card className="w-full  p-6 grid gap-6">
       <div className="flex items-center gap-4">
         <div className="bg-muted rounded-md flex items-center justify-center aspect-square w-12">
-          <Image src={props.companyLogo} width={40} height={40} alt="Company Logo" className="object-contain" />
+          <Image src={props.companyLogo} width={40} height={40} alt="Company Logo" className="object-contain w-10 h-10" />
         </div>
         <div className="flex-1">
-          <h3 className="text-lg font-semibold">{props.jobRole}</h3>
+          <h3 className="text-lg font-semibold">{props.jobTitle}</h3>
           <p className="text-muted-foreground">{props.companyName}</p>
         </div>
       </div>
       <div className="text-muted-foreground">
-       {props.description}
+       {props.jobDescription}
               </div>
       <div className="flex flex-wrap gap-2 justify-start">
        {props.skills.map((skill,index)=><Badge key={index} variant="outline">{skill}</Badge>)} 
        
       </div>
       <div className="flex justify-between items-end">
-        <div className="text-muted-foreground">Salary:{props.salary}</div>
-        <Button>Apply</Button>
+        <div className="text-muted-foreground">Salary:{props.jobSalary}</div>
+        <Link href={props.link} target="block"><Button>Apply</Button></Link>
       </div>
     </Card>
   )
