@@ -27,7 +27,7 @@ export default function SignUp() {
     password: "",
     companyName: "",
     jobRole: "",
-    expYear: 0,
+    expYear: "",
     role: "",
     profilePic: "",
   });
@@ -45,6 +45,7 @@ export default function SignUp() {
 
   async function handleSignUp(role: string, event: any) {
     event.preventDefault();
+    const loadingToastId = toast.loading("Signing Up...");
     formState.role = role;
     if (profilePicFile) {
       formState.profilePic = await imageToBase64(profilePicFile);
@@ -62,8 +63,16 @@ export default function SignUp() {
       });
 
       if (data.SignUp.success) {
-        toast.success("Signed Up, You can Login now !!");
+        toast.success("Signed Up, You can Login now !!",{
+          id:loadingToastId,
+          duration:1000
+        });
         window.location.href = "/signin";
+      }else if(data.SignUp.error){
+        toast.error("Error while Signing Up......",{
+          id:loadingToastId,
+          duration:1000
+        });
       }
     } catch (error) {
       console.log(error);

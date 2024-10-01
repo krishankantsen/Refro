@@ -77,16 +77,30 @@ export const typeDefs = gql`
     jobRole:String
     profilePic:String
   }
+  type PortfolioRes{
+    userId:Int
+    link: String
+    porPic: String
+
+  }
+  type PortfolioResponse {
+    success: Boolean
+    error:String
+    Portfolio:PortfolioRes
+  }
+
+
+
   type Query {
     Signin(input: SigninUser): SigninResponse,
     hello:Hello,
     GetAllPosts:[GetAllPosts]
-    GetPlacedUsers(input:Int):[PlacedUsers]
+    GetPlacedUsers(input:Int):[User]
     
   }
   type Mutation{
     SignUp(input:CreateUser):SignUpResponse,
-    Portfolio(input:PortfolioInput):SignUpResponse
+    Portfolio(input:PortfolioInput):PortfolioResponse
     CreatePost(input:CreatePost):SignUpResponse
     
   }
