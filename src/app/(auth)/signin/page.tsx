@@ -53,17 +53,21 @@ export default function Signin() {
   };
   async function handleSignIn(event: any) {
     event.preventDefault();
+    const loadingToastId = toast.loading("Signing in...");
     const { data } = await client.query({
       query: Signin_Query,
       variables: {
         input: formState,
       },
     });
-    console.log(data.Signin)
+    console.log(data.Signin.success)
       if (data.Signin.success) {
         dispatch(setTokenState(data.Signin.token))
         dispatch(setUserState(data.Signin.user))
         dispatch(setPortfolioState(data.Signin.portfolio))
+        toast.success("Sign-in successful!", { id: loadingToastId,
+          duration:1000
+         });
        router.push("/dashboard")
       } else {
         toast.error(data.error)

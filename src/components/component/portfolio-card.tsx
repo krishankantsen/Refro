@@ -31,11 +31,17 @@ import { imageToBase64 } from "@/lib/imageTObase64"
 import client from "@/lib/apolloClient"
 import { toast } from "sonner"
 import { DemoPortfolioPic } from "../utils/skills"
+import { setPortfolioState } from "@/lib/store/authSlice"
 const Portfolio_Mutation = gql`
  mutation Mutation($input: PortfolioInput) {
   Portfolio(input: $input) {
     error
     success
+    Portfolio {
+      userId
+      link
+      porPic
+    }
   }
 }
 `;
@@ -78,6 +84,7 @@ export function PortfolioCard() {
       });
       console.log(data)
       if (data.Portfolio.success) {
+        dispatch(setPortfolioState(data.Portfolio.Portfolio))
         toast.success("PortFolio Updated Successfully",{
           duration:1000
         });
@@ -162,3 +169,7 @@ function FilePenIcon(props:any) {
     </svg>
   )
 }
+function dispatch(arg0: any) {
+  throw new Error("Function not implemented.")
+}
+

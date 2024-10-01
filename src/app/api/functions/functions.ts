@@ -10,9 +10,9 @@ export async function CreatePortFolio(data: any) {
   if(CheckPortFolioExists){
     const Portfolio = await prisma.portfolio.update({
       where:{
-       id:parseInt(data.userId)
-      }, data: {
-         userId:  parseInt(data.userId),
+       id:CheckPortFolioExists.id
+      }, 
+      data: {
          link: data.link,
          porPic:data.porPic
        },
@@ -21,6 +21,7 @@ export async function CreatePortFolio(data: any) {
       return {
         success: true,
         error: "",
+        Portfolio:Portfolio
       };
     }
   }else{
@@ -35,6 +36,7 @@ export async function CreatePortFolio(data: any) {
       return {
         success: true,
         error: "",
+        Portfolio:CreatePortFolios
       };
     }
   }

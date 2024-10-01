@@ -2,6 +2,7 @@
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 import bcrypt from "bcrypt";
+import { DemoPortfolioPic } from "@/components/utils/skills";
 
 const User = z.object({
   name: z.string(),
@@ -24,7 +25,15 @@ const User = z.object({
 
 export async function SignUp(data: any) {
   data.expYear = +data.expYear;
-
+  
+  if(Number.isNaN(data.expYear)){
+    data.expYear=0
+}
+if (data.expYear==0) {
+  data.companyName=""
+  data.jobRole=""
+}
+console.log(data)
   const validationResult = User.safeParse(data);
   if (!validationResult.success) {
     return   {
@@ -47,7 +56,7 @@ export async function SignUp(data: any) {
 
     const hashedPassword = await bcrypt.hash(data.password, 10); // Using bcrypt to hash the password
 
-    await prisma.user.create({
+    const user=await prisma.user.create({
       data: {
         email: data.email,
         name: data.name,
@@ -59,6 +68,12 @@ export async function SignUp(data: any) {
         profilePic: data.profilePic,
       },
     });
+    await prisma.portfolio.create({
+      data: {
+       userId:  user.id,
+       link: "https://google.com",
+       porPic:DemoPortfolioPic
+     },});
 
     return {
       success: true,
