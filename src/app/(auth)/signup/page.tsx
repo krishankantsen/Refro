@@ -10,6 +10,7 @@ import client from "@/lib/apolloClient";
 import { toast } from "sonner";
 import { imageToBase64 } from "@/lib/imageTObase64";
 import { DemoProfilePic } from "@/components/utils/skills";
+import React from "react";
 
 const SignUp_Mutation = gql`
   mutation Mutation($input: CreateUser) {
@@ -74,8 +75,10 @@ export default function SignUp() {
           duration:1000
         });
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error:any) {
+      toast.error(error,{ id: loadingToastId,
+        duration:1000
+       });
     }
   }
 
@@ -115,8 +118,7 @@ export default function SignUp() {
                   placeholder="Enter your email...."
                   onChange={handleChange}
                   required
-                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
-"
+                  pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                 />
                 <br />
                 <label>Password:</label>

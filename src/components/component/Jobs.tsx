@@ -69,7 +69,7 @@ const Jobs = () => {
   });
 
   return (
-    <div className=' flex flex-col gap-3'>
+    <div className='flex flex-col gap-3'>
       <CenterTop />
       <Card className="w-full">
         <CardContent className="">

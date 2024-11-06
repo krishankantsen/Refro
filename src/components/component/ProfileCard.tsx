@@ -29,14 +29,14 @@ export function ProfileCard() {
 const [isProfile,setIsProfile]=useState(false);
   const user=useAppSelector((state)=>state.auth.user)
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-2xl mx-auto z-100 relative">
       <CardHeader className="flex flex-col items-center gap-4 py-8">
         <Avatar className="h-24 w-24 border">
           <AvatarImage src={user?.profilePic} alt="Profile picture" width={"auto"} height={"auto"}/>
           <AvatarFallback>JD</AvatarFallback>
         </Avatar>
         <div className="grid gap-1 text-center">
-          <div className="text-lg font-semibold">{user?.name}</div>
+          <div className="text-lg font-semibold">{user?.name}</div> 
           <div className="text-sm text-muted-foreground">{user?.role=="Placed"? user?.companyName: "Seek"}</div>
         </div>
       </CardHeader>

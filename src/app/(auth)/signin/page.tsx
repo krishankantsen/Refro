@@ -6,34 +6,36 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useAppDispatch } from "@/lib/store/hooks";
-import { setTokenState, setUserState,setPortfolioState } from "@/lib/store/authSlice";
+import { setTokenState, setPortfolioState, setUserState } from "@/lib/store/authSlice";
 import { useRouter } from "next/navigation";
 import gql from "graphql-tag";
 import client from "@/lib/apolloClient";
+
 const Signin_Query = gql`
-    query Query($input: SigninUser) {
-      Signin(input: $input) {
-        success
-        token
-        user {
-          id
-          email
-          name
-          companyName
-          role
-          jobRole
-          expYear
-          profilePic
-        }
-        portfolio {
-          id
-          userId
-          link
-          porPic
-    }
+  query Query($input: SigninUser ) {
+    Signin(input: $input) {
+      success
+      token
+      user {
+        id
+        email
+        name
+        companyName
+        role
+        jobRole
+        expYear
+        profilePic
+      }
+      portfolio {
+        id
+        userId
+        link
+        porPic
       }
     }
-  `;
+  }
+`;
+
 export default function Signin() {
   const [formState, setFormState] = useState({
     email: "",
@@ -42,7 +44,8 @@ export default function Signin() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [showPass, setShowPass] = useState(false);
-  const handleChange = (event: any) => {
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const fieldName = event.target.name;
     const fieldValue = event.target.value;
 
@@ -51,31 +54,43 @@ export default function Signin() {
       [fieldName]: fieldValue,
     });
   };
-  async function handleSignIn(event: any) {
+
+  async function handleSignIn(event: React.FormEvent) {
     event.preventDefault();
     const loadingToastId = toast.loading("Signing in...");
-    const { data } = await client.query({
-      query: Signin_Query,
-      variables: {
-        input: formState,
-      },
-    });
-    console.log(data.Signin.success)
+    try {
+      const { data } = await client.query({
+        query: Signin_Query,
+        variables: {
+          input: formState,
+        },
+      });
       if (data.Signin.success) {
-        dispatch(setTokenState(data.Signin.token))
-        dispatch(setUserState(data.Signin.user))
-        dispatch(setPortfolioState(data.Signin.portfolio))
-        toast.success("Sign-in successful!", { id: loadingToastId,
-          duration:1000
-         });
-       router.push("/dashboard")
+        dispatch(setTokenState(data.Signin.token));
+        dispatch(setUserState(data.Signin.user));
+        dispatch(setPortfolioState(data.Signin.portfolio));
+        toast.success("Sign-in successful!", {
+          id: loadingToastId,
+          duration: 1000,
+        });
+        router.push("/dashboard");
       } else {
-        toast.error(data.error)
+        toast.error(data.error, {
+          id: loadingToastId,
+          duration: 1000,
+        });
       }
+    } catch (error) {
+      toast.error("An error occurred during sign-in.", {
+        id: loadingToastId,
+        duration: 1000,
+      });
+    }
   }
+
   return (
     <div className="w-screen h-screen flex justify-center items-center">
-      <form className="sm:w-2/5 lg:w-[30%] xl:w-1/5 flex flex-col">
+      <form className="sm:w-2/5 lg:w-[30%] xl:w-1/5 flex flex-col" onSubmit={handleSignIn}>
         <h1 className="text-3xl font-bold text-center">Sign In</h1>
         <br />
 
@@ -86,14 +101,13 @@ export default function Signin() {
           type="email"
           placeholder="Enter your email...."
           onChange={handleChange}
-          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
-"
+          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
           required
         />
         <br />
         <label>Password:</label>
         <Input
-          type={showPass == true ? "password" : "text"}
+          type={showPass ? "text" : "password"}
           name="password"
           value={formState.password}
           placeholder="Enter your password...."
@@ -101,7 +115,7 @@ export default function Signin() {
           required
           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d\w\W]{8,}$"
         />
-        {showPass == true ? (
+        {showPass ? (
           <Eye
             onClick={() => setShowPass(!showPass)}
             className="cursor-pointer self-end mt-[-30px] mr-2"
@@ -113,12 +127,12 @@ export default function Signin() {
           />
         )}
         <br />
-        <Button className="self-center" onClick={handleSignIn}>
+        <Button className="self-center" type="submit">
           SignIn
         </Button>
         <br />
         <p className="text-center">
-          Do not have an account ?{" "}
+          Do not have an account?{" "}
           <span className="font-bold">
             <Link href="/signup">SignUp</Link>
           </span>

@@ -25,7 +25,7 @@ import Image from "next/image"
 import { useState } from "react"
 import { X } from "lucide-react"
 import { Input } from "../ui/input"
-import { useAppSelector } from "@/lib/store/hooks"
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks"
 import gql from "graphql-tag"
 import { imageToBase64 } from "@/lib/imageTObase64"
 import client from "@/lib/apolloClient"
@@ -47,6 +47,7 @@ const Portfolio_Mutation = gql`
 `;
 export function PortfolioCard() {
   const [isEdit,setIsEdit]=useState(false);
+  const dispatch=useAppDispatch();
   const [formState, setFormState] = useState({
     userId: 0,
     link:"",
@@ -55,7 +56,6 @@ export function PortfolioCard() {
   const [companyLogoFile, setCompanyLogoFile] = useState<File | null>(null);
   const userId = useAppSelector((state) => state.auth.user?.id);
   const portfolio =useAppSelector((state)=>state.auth.portfolio)
-  // console.log(portfolio)
   const handleChange = (event: any) => {
     const fieldName = event.target.name;
     const fieldValue = event.target.value;
@@ -82,12 +82,12 @@ export function PortfolioCard() {
           input: formState,
         },
       });
-      console.log(data)
       if (data.Portfolio.success) {
         dispatch(setPortfolioState(data.Portfolio.Portfolio))
         toast.success("PortFolio Updated Successfully",{
           duration:1000
         });
+        setIsEdit(!isEdit)
       }else{
         toast.error("Error Updating Portfolio");
       }
